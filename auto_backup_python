@@ -1,0 +1,17 @@
+import shutil
+import tarfile
+import os
+import paramiko
+
+source_dir = '/path/src'
+destination_dir = '/path/dest'
+shutil.make_archive(destination_dir, 'gztar', source_dir)
+client = paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect('hostname', username='username', password='password')
+sftp = client.open_sftp()
+local_file = destination_dir+'.tar.gz'
+remote_file = '/path/to/remote/backup.tar.gz'
+sftp.put(local_file, remote_file)
+sftp.close()
+client.close()
