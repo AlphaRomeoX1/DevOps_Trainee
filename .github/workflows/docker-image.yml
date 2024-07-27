@@ -22,6 +22,6 @@ jobs:
     - name: Push Docker image
       run: docker push abhimanyusharma9988/cowapp:latest
     - name: Deploy to Kubernetes
-      run: kubectl apply -f wisecow-deployment.yaml
+      run: kubectl apply -f wisecow-deployment.yaml --validate=false
       env:
         KUBECONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
